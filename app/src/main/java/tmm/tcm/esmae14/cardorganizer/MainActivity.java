@@ -1,11 +1,17 @@
 package tmm.tcm.esmae14.cardorganizer;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -14,8 +20,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        EditText txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
-        EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
+
         setContentView(R.layout.activity_main);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
@@ -31,6 +36,52 @@ public class MainActivity extends ActionBarActivity {
         tabSpec.setContent(R.id.tabAdd);
         tabSpec.setIndicator("Criar");
         tabHost.addTab(tabSpec);
+
+        final EditText txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
+        EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
+        final Button btn_add=(Button) findViewById(R.id.btn_add);
+        final Button mscan=(Button) findViewById(R.id.btn_Leitor);
+
+        mscan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText()) + "Espere um pouco, carregando leitor...", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                startActivityForResult(intent, 0);
+
+            }
+        });
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Contact contact = new Contact(dbHandler.getContactsCount(), String.valueOf(nameTxt.getText()), String.valueOf(phoneTxt.getText()), String.valueOf(emailTxt.getText()), String.valueOf(addressTxt.getText()), imageUri);
+               // if (!contactExists(contact)) {
+                  //  dbHandler.createContact(contact);
+                  //  Contacts.add(contact);
+                    Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " has been added to your Contacts!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+            //}
+        });
+        txtNomeCartao.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                btn_add.setEnabled(String.valueOf(txtNomeCartao.getText()).trim().length() > 0);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
 
