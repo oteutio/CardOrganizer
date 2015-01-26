@@ -114,7 +114,11 @@ public class MainActivity extends ActionBarActivity {
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                     // Adiciona o numero à caixa de texto
                     EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
-                    txtNumeroCartao.setText(contents);
+                    if(contents.matches("[0-9]+")){
+                        txtNumeroCartao.setText(contents);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Código Inválido", Toast.LENGTH_SHORT).show();
+                    }
             } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
             }
