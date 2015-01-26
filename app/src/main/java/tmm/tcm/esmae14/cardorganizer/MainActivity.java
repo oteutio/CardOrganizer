@@ -116,6 +116,8 @@ public class MainActivity extends ActionBarActivity {
                     EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
                     if(contents.matches("[0-9]+")){
                         txtNumeroCartao.setText(contents);
+                        txtNumeroCartao.setFocusable(false);
+                        txtNumeroCartao.setFocusableInTouchMode(false);
                     } else {
                         Toast.makeText(getApplicationContext(), "Código Inválido", Toast.LENGTH_SHORT).show();
                     }
