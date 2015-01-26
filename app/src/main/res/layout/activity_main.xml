@@ -60,7 +60,7 @@
                         <EditText
                             android:layout_width="227dp"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:ems="10"
                             android:id="@+id/txtNumeroCartao"
                             android:layout_marginTop="10dp"
