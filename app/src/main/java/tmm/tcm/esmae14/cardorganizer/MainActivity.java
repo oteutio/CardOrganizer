@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TabHost;
 
 
@@ -12,21 +13,24 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        EditText txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
+        EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
         setContentView(R.layout.activity_main);
 
-       /* TabHost tabHost = (TabHost) findViewById(id.tabHost);
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
 
         tabHost.setup();
 
         TabHost.TabSpec tabSpec = tabHost.newTabSpec("Lista");
-        tabSpec.setContent(id.tabList);
+        tabSpec.setContent(R.id.tabList);
         tabSpec.setIndicator("Lista");
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("Criar");
-        tabSpec.setContent(id.tabAdd);
+        tabSpec.setContent(R.id.tabAdd);
         tabSpec.setIndicator("Criar");
-        tabHost.addTab(tabSpec);*/
+        tabHost.addTab(tabSpec);
     }
 
 
