@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 
 public class Cartao {
+    private int id;
     private String nomeCartao;
     private String numero;
     private String tipo;
     private ArrayList<String> categorias;
 
-    public Cartao(String nomeCartao, String numero, String tipo, ArrayList<String> categorias){
-
+    public Cartao(int id, String nomeCartao, String numero, String tipo, ArrayList<String> categorias){
+        setId(id);
         setNomeCartao(nomeCartao);
         setNumero(numero);
         setTipo(tipo);
@@ -22,7 +23,7 @@ public class Cartao {
 
     }
     public Cartao(){
-
+        id=0;
         nomeCartao="";
         numero="";
         tipo="";
@@ -35,6 +36,11 @@ public class Cartao {
 
     }
 
+    public void setId(int id){
+
+        this.id=id;
+
+    }
     public void setNumero(String numero){
 
         this.numero=numero;
@@ -52,6 +58,7 @@ public class Cartao {
 
     public String getNomeCartao(){return nomeCartao;}
 
+    public int getId(){return id;}
 
     public String getTipo(){return tipo;}
 
