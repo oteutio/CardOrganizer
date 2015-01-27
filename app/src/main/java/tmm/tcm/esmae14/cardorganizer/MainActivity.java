@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,10 @@ import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
-    List<Cartao> cartoes = new ArrayList<Cartao>();
+    String format;
+    ListView cardListView;
+    ImageView cardImageImgView;
+    List<Cartao> cartoes = new ArrayList<>();
     Database db;
     EditText txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
     EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
@@ -30,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        cardListView = (ListView) findViewById(R.id.listView);
         setContentView(R.layout.activity_main);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
@@ -64,12 +68,12 @@ public class MainActivity extends ActionBarActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), null);
+                Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format);
                 if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " has been added to your Contacts!", Toast.LENGTH_SHORT).show();
-                    return;
+
                 }
 
             }
@@ -127,43 +131,39 @@ public class MainActivity extends ActionBarActivity {
         return false;
     }
 
-    /*private void populateList() {
+    private void populateList() {
         ArrayAdapter<Cartao> adapter = new CardListAdapter();
-        CardListView.setAdapter(adapter);
-    }*/
+        cardListView.setAdapter(adapter);
+    }
 
-    /*private class CardListAdapter extends ArrayAdapter<Cartao> {
+
+
+    private class CardListAdapter extends ArrayAdapter<Cartao> {
         public CardListAdapter() {
-            super (MainActivity.this, R.layout.listview_item, Contacts);
+            super (MainActivity.this, R.layout.layout_lista, cartoes);
         }
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
             if (view == null)
-                view = getLayoutInflater().inflate(R.layout.listview_item, parent, false);
+                view = getLayoutInflater().inflate(R.layout.layout_lista, parent, false);
 
-            Cartao currentContact = cartoes.get(position);
+            Cartao currentCartao = cartoes.get(position);
 
-            TextView name = (TextView) view.findViewById(R.id.contactName);
-            name.setText(currentContact.getName());
-            TextView phone = (TextView) view.findViewById(R.id.phoneNumber);
-            phone.setText(currentContact.getPhone());
-            TextView email = (TextView) view.findViewById(R.id.emailAddress);
-            email.setText(currentContact.getEmail());
-            TextView address = (TextView) view.findViewById(R.id.cAddress);
-            address.setText(currentContact.getAddress());
-            ImageView ivContactImage = (ImageView) view.findViewById(R.id.ivContactImage);
-            ivContactImage.setImageURI(currentContact.getImageURI());
+            TextView nome = (TextView) view.findViewById(R.id.txtNomeCartao);
+            nome.setText(currentCartao.getNomeCartao());
+            TextView numero = (TextView) view.findViewById(R.id.txtNumeroCartao);
+            numero.setText(currentCartao.getNumero());
 
             return view;
         }
-    }*/
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                     // Adiciona o numero à caixa de texto
                     EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
                     if(contents.matches("[0-9]+")){

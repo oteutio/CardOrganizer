@@ -28,6 +28,27 @@
                 android:layout_height="fill_parent">
 
                 <LinearLayout
+                    android:id="@+id/tabList"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Os meus cartões"
+                        android:id="@+id/txtTitleList"
+                        android:layout_gravity="center_horizontal" />
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/listView"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/tabAdd"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
@@ -97,12 +118,6 @@
                         android:layout_marginTop="0dp" />
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/tabList"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="vertical"></LinearLayout>
 
             </FrameLayout>
 
