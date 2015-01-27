@@ -118,11 +118,11 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
-        if (db.getCardCount() != 0)
-            noCard.setEnabled(false);
+        if (db.getCardCount() != 0) {
+            noCard.setText("");
             cartoes.addAll(db.getAllCards());
-
-        populateList();
+        }
+        preencherLista();
 
 
     }
@@ -142,7 +142,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    private void populateList() {
+    private void preencherLista() {
         ArrayAdapter<Cartao> adapter = new CardListAdapter();
         cardListView.setAdapter(adapter);
     }
