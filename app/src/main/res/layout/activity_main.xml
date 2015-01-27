@@ -20,7 +20,8 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"></TabWidget>
+                android:layout_height="wrap_content"
+                style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"></TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -41,12 +42,13 @@
                         android:text="Criar Cartão"
                         android:id="@+id/txtCriarCartao"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="20dp"
+                        style="@style/TextAppearance.AppCompat.Title" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapWords|textPersonName"
                         android:ems="10"
                         android:id="@+id/txtNomeCartao"
                         android:layout_marginTop="30dp"
@@ -110,7 +112,9 @@
                         android:text="Os meus cartões"
                         android:id="@+id/txtTitleList"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="20dp"
+                        style="@style/TextAppearance.AppCompat.Title"
+                        android:layout_marginBottom="20dp" />
 
                     <ListView
                         android:layout_width="match_parent"
@@ -126,7 +130,8 @@
                         android:id="@+id/noCard"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="180dp"
-                        android:alpha="50" />
+                        android:alpha="80"
+                        style="@style/Base.TextAppearance.AppCompat.Body2" />
 
                 </LinearLayout>
 
