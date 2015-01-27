@@ -24,6 +24,7 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
     String format;
+    int flag=0;
     ListView cardListView;
     ImageView cardImageImgView;
     List<Cartao> cartoes = new ArrayList<>();
@@ -32,12 +33,15 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /////////////////////////Nao me toca/////////////////////////
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ///////////////////////////////////////////////////////////
+
         txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
         txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
         cardListView = (ListView) findViewById(R.id.listView);
-        setContentView(R.layout.activity_main);
+        db= new Database(getApplicationContext());
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
 
@@ -61,23 +65,32 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText()) + "Espere um pouco, carregando leitor...", Toast.LENGTH_LONG).show();
-                /*Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-                startActivityForResult(intent, 0);*/
+                Toast.makeText(getApplicationContext(), "Aguarde um momento... ", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                startActivityForResult(intent, 0);
 
             }
         });
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), null);
-               /* if (!cartaoExists(cartao)) {
+                Cartao cartao;
+                /*int count=db.getCardCount();
+                Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+".........."+count, Toast.LENGTH_SHORT).show();*/
+                if(flag==1){
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format);
+
+                }else{
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "");
+                }
+
+                if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
-                    Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao1.getText())+ " has been added to your Contacts!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
 
-                }
-*/
+                }else{Toast.makeText(getApplicationContext(),"Esse cartão já existe!",Toast.LENGTH_LONG).show();}
+
             }
         });
         txtNomeCartao.addTextChangedListener(new TextWatcher() {
@@ -102,7 +115,7 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-   /* private boolean cartaoExists(Cartao cartao) {
+    private boolean cartaoExists(Cartao cartao) {
         String name = cartao.getNomeCartao();
         int cardCount = cartoes.size();
 
@@ -111,16 +124,17 @@ public class MainActivity extends ActionBarActivity {
                 return true;
         }
         return false;
-    }*/
+    }
 
-    /*private void populateList() {
+
+    private void populateList() {
         ArrayAdapter<Cartao> adapter = new CardListAdapter();
         cardListView.setAdapter(adapter);
-    }*/
+    }
 
 
 
-    /*private class CardListAdapter extends ArrayAdapter<Cartao> {
+    private class CardListAdapter extends ArrayAdapter<Cartao> {
         public CardListAdapter() {
             super (MainActivity.this, R.layout.layout_lista, cartoes);
         }
@@ -139,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
 
             return view;
         }
-    }*/
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {
@@ -149,6 +163,7 @@ public class MainActivity extends ActionBarActivity {
                     // Adiciona o numero à caixa de texto
                     EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
                     if(contents.matches("[0-9]+")){
+                        flag=1;
                         txtNumeroCartao.setText(contents);
                         txtNumeroCartao.setFocusable(false);
                         txtNumeroCartao.setFocusableInTouchMode(false);

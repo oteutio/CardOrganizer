@@ -15,7 +15,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "contactManager",
+    private static final String DATABASE_NAME = "cardManager",
     TABLE_CARTOES = "cartoes",
     KEY_ID = "id",
     KEY_NOME = "nome",
@@ -24,13 +24,12 @@ public class Database extends SQLiteOpenHelper {
     //KEY_CATEGORIAS = "categorias";
 
     public Database(Context context) {
-
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_CARTOES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NOME + " TEXT," + KEY_NUMERO + " TEXT," + KEY_TIPO + " TEXT" /*+ KEY_CATEGORIAS + " TEXT"*/);
+        db.execSQL("CREATE TABLE " + TABLE_CARTOES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NOME + " TEXT," + KEY_NUMERO + " TEXT," + KEY_TIPO + " TEXT)" /*+ KEY_CATEGORIAS + " TEXT"*/);
     }
 
     @Override
