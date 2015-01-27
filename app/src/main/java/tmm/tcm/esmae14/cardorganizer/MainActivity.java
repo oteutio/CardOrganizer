@@ -69,17 +69,17 @@ public class MainActivity extends ActionBarActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao1.getText()), String.valueOf(txtNumeroCartao1.getText()), null);
+                Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao1.getText()), String.valueOf(txtNumeroCartao1.getText()), null);
                 if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao1.getText())+ " has been added to your Contacts!", Toast.LENGTH_SHORT).show();
 
                 }
-*/
+
             }
         });
-        /*txtNomeCartao1.addTextChangedListener(new TextWatcher() {
+        txtNomeCartao1.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
@@ -87,14 +87,14 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                btn_add.setEnabled(String.valueOf(txtNomeCartao1.getText()).trim().length() > 0);
+                btn_add.setEnabled(!txtNomeCartao1.getText().toString().trim().isEmpty());
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
-        });*/
+        });
 
     }
 
@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   /* private boolean cartaoExists(Cartao cartao) {
+    private boolean cartaoExists(Cartao cartao) {
         String name = cartao.getNomeCartao();
         int cardCount = cartoes.size();
 
@@ -130,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
                 return true;
         }
         return false;
-    }*/
+    }
 
     /*private void populateList() {
         ArrayAdapter<Cartao> adapter = new CardListAdapter();
