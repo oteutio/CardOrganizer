@@ -88,6 +88,10 @@ public class MainActivity extends ActionBarActivity {
                 if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
+                    txtNomeCartao.setText("");
+                    txtNumeroCartao.setText("");
+                    txtNumeroCartao.setFocusable(true);
+                    txtNumeroCartao.setFocusableInTouchMode(true );
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
 
                 }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeCartao.getText())+" já existe!",Toast.LENGTH_LONG).show();}
