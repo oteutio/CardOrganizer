@@ -26,7 +26,6 @@ public class MainActivity extends ActionBarActivity {
     String format;
     int flag=0;
     ListView cardListView;
-    ImageView cardImageImgView;
     List<Cartao> cartoes = new ArrayList<>();
     Database db;
     EditText txtNomeCartao, txtNumeroCartao ;
@@ -103,6 +102,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
 
                 btn_add.setEnabled(String.valueOf(txtNomeCartao.getText()).trim().length() > 0);
 
