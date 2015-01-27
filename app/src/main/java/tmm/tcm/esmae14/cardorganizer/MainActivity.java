@@ -60,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         final Button btn_add=(Button) findViewById(R.id.btn_add);
+        btn_add.setEnabled(false);
         final Button mscan=(Button) findViewById(R.id.btn_Leitor);
 
         mscan.setOnClickListener(new View.OnClickListener() {
@@ -88,12 +89,12 @@ public class MainActivity extends ActionBarActivity {
                 if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
+                    noCard.setText("");
+                    Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
                     txtNomeCartao.setText("");
                     txtNumeroCartao.setText("");
                     txtNumeroCartao.setFocusable(true);
                     txtNumeroCartao.setFocusableInTouchMode(true );
-                    Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
-
                 }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeCartao.getText())+" já existe!",Toast.LENGTH_LONG).show();}
 
             }
@@ -107,11 +108,25 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
+                    btn_add.setEnabled((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0);
 
-                btn_add.setEnabled(String.valueOf(txtNomeCartao.getText()).trim().length() > 0);
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        txtNumeroCartao.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                btn_add.setEnabled((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0);
 
             }
 
