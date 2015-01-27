@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="375dp"
+        android:layout_height="fill_parent"
+        android:id="@+id/listLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Nome do Cartão"
+            android:id="@+id/cardName"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Número do código de barras"
+            android:id="@+id/barNumber"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            style="@style/Base.TextAppearance.AppCompat.Caption" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/ivContactImage" />
+
+</LinearLayout>
