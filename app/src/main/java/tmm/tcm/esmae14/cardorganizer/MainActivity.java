@@ -8,14 +8,24 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    List<Cartao> cartoes = new ArrayList<Cartao>();
+    Database db;
+    EditText txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
+    EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +47,7 @@ public class MainActivity extends ActionBarActivity {
         tabSpec.setIndicator("Criar");
         tabHost.addTab(tabSpec);
 
-        final EditText txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
-        EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
+
         final Button btn_add=(Button) findViewById(R.id.btn_add);
         final Button mscan=(Button) findViewById(R.id.btn_Leitor);
 
@@ -55,15 +64,15 @@ public class MainActivity extends ActionBarActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Contact contact = new Contact(dbHandler.getContactsCount(), String.valueOf(nameTxt.getText()), String.valueOf(phoneTxt.getText()), String.valueOf(emailTxt.getText()), String.valueOf(addressTxt.getText()), imageUri);
-               // if (!contactExists(contact)) {
-                  //  dbHandler.createContact(contact);
-                  //  Contacts.add(contact);
+                Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), null);
+                if (!cartaoExists(cartao)) {
+                    db.createCartao(cartao);
+                    cartoes.add(cartao);
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " has been added to your Contacts!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-            //}
+            }
         });
         txtNomeCartao.addTextChangedListener(new TextWatcher() {
             @Override
@@ -106,6 +115,49 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private boolean cartaoExists(Cartao cartao) {
+        String name = cartao.getNomeCartao();
+        int cardCount = cartoes.size();
+
+        for (int i = 0; i < cardCount; i++) {
+            if (name.compareToIgnoreCase(cartoes.get(i).getNomeCartao()) == 0)
+                return true;
+        }
+        return false;
+    }
+
+    /*private void populateList() {
+        ArrayAdapter<Cartao> adapter = new CardListAdapter();
+        CardListView.setAdapter(adapter);
+    }*/
+
+    /*private class CardListAdapter extends ArrayAdapter<Cartao> {
+        public CardListAdapter() {
+            super (MainActivity.this, R.layout.listview_item, Contacts);
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            if (view == null)
+                view = getLayoutInflater().inflate(R.layout.listview_item, parent, false);
+
+            Cartao currentContact = cartoes.get(position);
+
+            TextView name = (TextView) view.findViewById(R.id.contactName);
+            name.setText(currentContact.getName());
+            TextView phone = (TextView) view.findViewById(R.id.phoneNumber);
+            phone.setText(currentContact.getPhone());
+            TextView email = (TextView) view.findViewById(R.id.emailAddress);
+            email.setText(currentContact.getEmail());
+            TextView address = (TextView) view.findViewById(R.id.cAddress);
+            address.setText(currentContact.getAddress());
+            ImageView ivContactImage = (ImageView) view.findViewById(R.id.ivContactImage);
+            ivContactImage.setImageURI(currentContact.getImageURI());
+
+            return view;
+        }
+    }*/
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == 0) {

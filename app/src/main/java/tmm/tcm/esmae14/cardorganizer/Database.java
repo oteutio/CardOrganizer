@@ -75,7 +75,7 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public int getContactsCount() {
+    public int getCardCount() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CARTOES, null);
         int count = cursor.getCount();
@@ -85,7 +85,7 @@ public class Database extends SQLiteOpenHelper {
         return count;
     }
 
-    public int updateContact(Cartao cartao) {
+    public int updateCartao(Cartao cartao) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -101,20 +101,20 @@ public class Database extends SQLiteOpenHelper {
         return rowsAffected;
     }
 
-    public List<Cartao> getAllContacts() {
-        List<Cartao> contacts = new ArrayList<Cartao>();
+    public List<Cartao> getAllCards() {
+        List<Cartao> cards = new ArrayList<Cartao>();
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CARTOES, null);
 
         if (cursor.moveToFirst()) {
             do {
-                contacts.add(new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+                cards.add(new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3)));
             }
             while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return contacts;
+        return cards;
     }
 }
