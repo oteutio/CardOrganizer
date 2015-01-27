@@ -28,13 +28,14 @@ public class MainActivity extends ActionBarActivity {
     ImageView cardImageImgView;
     List<Cartao> cartoes = new ArrayList<>();
     Database db;
-    EditText txtNomeCartao1, txtNumeroCartao1 ;
+    EditText txtNomeCartao, txtNumeroCartao ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        txtNomeCartao1 = (EditText) findViewById(R.id.txtNomeCartao);
-        txtNumeroCartao1 = (EditText) findViewById(R.id.txtNumeroCartao);
+        setContentView(R.layout.activity_main);
+        txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
+        txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
         cardListView = (ListView) findViewById(R.id.listView);
         setContentView(R.layout.activity_main);
 
@@ -60,26 +61,26 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao1.getText()) + "Espere um pouco, carregando leitor...", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-                startActivityForResult(intent, 0);
+                Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText()) + "Espere um pouco, carregando leitor...", Toast.LENGTH_LONG).show();
+                /*Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                startActivityForResult(intent, 0);*/
 
             }
         });
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao1.getText()), String.valueOf(txtNumeroCartao1.getText()), null);
-                if (!cartaoExists(cartao)) {
+               // Cartao cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), null);
+               /* if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao1.getText())+ " has been added to your Contacts!", Toast.LENGTH_SHORT).show();
 
                 }
-
+*/
             }
         });
-        txtNomeCartao1.addTextChangedListener(new TextWatcher() {
+        txtNomeCartao.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
@@ -87,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                btn_add.setEnabled(!txtNomeCartao1.getText().toString().trim().isEmpty());
+                btn_add.setEnabled(String.valueOf(txtNomeCartao.getText()).trim().length() > 0);
             }
 
             @Override
@@ -99,29 +100,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private boolean cartaoExists(Cartao cartao) {
+   /* private boolean cartaoExists(Cartao cartao) {
         String name = cartao.getNomeCartao();
         int cardCount = cartoes.size();
 
@@ -130,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
                 return true;
         }
         return false;
-    }
+    }*/
 
     /*private void populateList() {
         ArrayAdapter<Cartao> adapter = new CardListAdapter();
@@ -178,5 +159,26 @@ public class MainActivity extends ActionBarActivity {
                 // Handle cancel
             }
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
