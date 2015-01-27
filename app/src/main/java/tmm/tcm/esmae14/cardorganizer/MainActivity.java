@@ -30,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
     List<Cartao> cartoes = new ArrayList<>();
     Database db;
     EditText txtNomeCartao, txtNumeroCartao ;
+    TextView noCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
         txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
         txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
+        noCard=(TextView) findViewById(R.id.noCard);
         cardListView = (ListView) findViewById(R.id.listView);
         db= new Database(getApplicationContext());
 
@@ -81,7 +83,7 @@ public class MainActivity extends ActionBarActivity {
                     cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format);
 
                 }else{
-                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "");
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "EAN_13");
                 }
 
                 if (!cartaoExists(cartao)) {
@@ -89,7 +91,7 @@ public class MainActivity extends ActionBarActivity {
                     cartoes.add(cartao);
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
 
-                }else{Toast.makeText(getApplicationContext(),"Esse cartão já existe!",Toast.LENGTH_LONG).show();}
+                }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeCartao.getText())+" já existe!",Toast.LENGTH_LONG).show();}
 
             }
         });
@@ -101,7 +103,12 @@ public class MainActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
                 btn_add.setEnabled(String.valueOf(txtNomeCartao.getText()).trim().length() > 0);
+
+
+
+
             }
 
             @Override
@@ -109,6 +116,14 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+
+
+        if (db.getCardCount() != 0)
+            noCard.setEnabled(false);
+            cartoes.addAll(db.getAllCards());
+
+        populateList();
+
 
     }
 
@@ -146,9 +161,9 @@ public class MainActivity extends ActionBarActivity {
 
             Cartao currentCartao = cartoes.get(position);
 
-            TextView nome = (TextView) view.findViewById(R.id.txtNomeCartao);
+            TextView nome = (TextView) view.findViewById(R.id.cardName);
             nome.setText(currentCartao.getNomeCartao());
-            TextView numero = (TextView) view.findViewById(R.id.txtNumeroCartao);
+            TextView numero = (TextView) view.findViewById(R.id.barNumber);
             numero.setText(currentCartao.getNumero());
 
             return view;
