@@ -100,6 +100,7 @@ public class MainActivity extends ActionBarActivity {
                     startActivityForResult(intent, 0);
                 } catch(Exception e){
                     if(e.toString().contains("com.google.zxing.client.android.SCAN")){
+                        Toast.makeText(getApplicationContext(), "É necessária a Aplicação Barcode Scanner", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
                         startActivity(intent);
@@ -190,7 +191,8 @@ public class MainActivity extends ActionBarActivity {
             intent.putExtra("ENCODE_DATA", cartoes.get(position).getNumero());
             startActivityForResult(intent,0);
         } catch(Exception e){
-            if(e.toString().contains("com.google.zxing.client.android.SCAN")){
+            if(e.toString().contains("com.google.zxing.client.android.ENCODE")){
+                Toast.makeText(getApplicationContext(), "É necessária a Aplicação Barcode Scanner", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
                 startActivity(intent);
