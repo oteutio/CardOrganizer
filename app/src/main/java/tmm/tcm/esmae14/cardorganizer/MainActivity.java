@@ -1,5 +1,6 @@
 package tmm.tcm.esmae14.cardorganizer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +34,8 @@ public class MainActivity extends ActionBarActivity {
     Database db;
     EditText txtNomeCartao, txtNumeroCartao ;
     TextView noCard;
+    int longClickedItemIndex;
+    ArrayAdapter<Cartao> cartaoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,16 @@ public class MainActivity extends ActionBarActivity {
         noCard=(TextView) findViewById(R.id.noCard);
         cardListView = (ListView) findViewById(R.id.listView);
         db= new Database(getApplicationContext());
+
+        registerForContextMenu(cardListView);
+
+        cardListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                longClickedItemIndex = position;
+                return false;
+            }
+        });
 
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
 
@@ -94,6 +109,7 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 if (!cartaoExists(cartao)) {
+                    hideKeyboard();
                     db.createCartao(cartao);
                     cartoes.add(cartao);
                     noCard.setText("");
@@ -169,8 +185,8 @@ public class MainActivity extends ActionBarActivity {
 
 
     private void preencherLista() {
-        ArrayAdapter<Cartao> adapter = new CardListAdapter();
-        cardListView.setAdapter(adapter);
+        cartaoAdapter = new CardListAdapter();
+        cardListView.setAdapter(cartaoAdapter);
     }
 
 
@@ -236,5 +252,14 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideKeyboard() {
+        // Check if no view has focus:
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }

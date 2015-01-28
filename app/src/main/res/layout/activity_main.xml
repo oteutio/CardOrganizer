@@ -9,8 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/tabHost"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -39,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Criar Cartão"
+                        android:text="Adicionar Cartão"
                         android:id="@+id/txtCriarCartao"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
@@ -56,11 +55,11 @@
 
                     <GridLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.19">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.05">
 
                         <EditText
-                            android:layout_width="239dp"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
                             android:id="@+id/txtNumeroCartao"
@@ -69,16 +68,17 @@
                             android:hint="Insira o número do cartão"
                             android:inputType="number"
                             android:layout_marginTop="10dp"
+                            android:layout_marginRight="105dp"
                             android:layout_columnSpan="2" />
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:text="Leitor"
                             android:id="@+id/btn_Leitor"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="0dp"
+                            android:layout_marginLeft="-101dp"
                             android:layout_marginTop="10dp"
                             android:layout_row="0"
                             android:layout_column="8" />
