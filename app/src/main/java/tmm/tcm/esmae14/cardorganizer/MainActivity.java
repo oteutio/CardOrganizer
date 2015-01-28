@@ -57,6 +57,13 @@ public class MainActivity extends ActionBarActivity {
 
         registerForContextMenu(cardListView);
 
+        cardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                gerarBarcode(position);
+            }
+        });
+
         cardListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -174,6 +181,23 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    private void gerarBarcode(int position) {
+        try{
+            Toast.makeText(getApplicationContext(), "A gerar o Barcode... ", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent("com.google.zxing.client.android.ENCODE");
+            intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
+            intent.putExtra("ENCODE_FORMAT", cartoes.get(position).getFormato());
+            intent.putExtra("ENCODE_DATA", cartoes.get(position).getNumero());
+            startActivityForResult(intent,0);
+        } catch(Exception e){
+            if(e.toString().contains("com.google.zxing.client.android.SCAN")){
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
+                startActivity(intent);
+            }
+        }
+    }
+
 
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
@@ -187,20 +211,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case ABRIR:
-                try{
-                    Toast.makeText(getApplicationContext(), "A gerar o Barcode... ", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent("com.google.zxing.client.android.ENCODE");
-                    intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
-                    intent.putExtra("ENCODE_FORMAT", cartoes.get(longClickedItemIndex).getFormato());
-                    intent.putExtra("ENCODE_DATA", cartoes.get(longClickedItemIndex).getNumero());
-                    startActivityForResult(intent,0);
-                } catch(Exception e){
-                    if(e.toString().contains("com.google.zxing.client.android.SCAN")){
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
-                        startActivity(intent);
-                    }
-                }
+                gerarBarcode(longClickedItemIndex);
                 break;
             case DELETE:
                 db.deleteCard(cartoes.get(longClickedItemIndex));
@@ -298,4 +309,5 @@ public class MainActivity extends ActionBarActivity {
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
 }
