@@ -109,7 +109,6 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 if (!cartaoExists(cartao)) {
-                    hideKeyboard();
                     db.createCartao(cartao);
                     cartoes.add(cartao);
                     noCard.setText("");
@@ -118,6 +117,7 @@ public class MainActivity extends ActionBarActivity {
                     txtNumeroCartao.setText("");
                     txtNumeroCartao.setFocusable(true);
                     txtNumeroCartao.setFocusableInTouchMode(true );
+                    hideKeyboard();
                 }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeCartao.getText())+" já existe!",Toast.LENGTH_LONG).show();}
 
             }
