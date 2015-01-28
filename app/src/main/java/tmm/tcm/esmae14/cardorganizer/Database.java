@@ -63,7 +63,7 @@ public class Database extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Cartao cartao = new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        Cartao cartao = new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), "");
         db.close();
         cursor.close();
         return cartao;
@@ -110,7 +110,7 @@ public class Database extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                cards.add(new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
+                cards.add(new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), ""));
             }
             while (cursor.moveToNext());
         }

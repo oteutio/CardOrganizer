@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
     private static final int ABRIR = 0, DELETE = 1;
 
     String format;
-    String type;
+
     int flag=0;
     ListView cardListView;
     List<Cartao> cartoes = new ArrayList<>();
@@ -115,9 +115,9 @@ public class MainActivity extends ActionBarActivity {
                 /*int count=db.getCardCount();
                 Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+".........."+count, Toast.LENGTH_SHORT).show();*/
                 if(flag==1){
-                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format, type);
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format, "");
                 }else{
-                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "EAN_13", type);
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "EAN_13", "");
                 }
 
                 if (!cartaoExists(cartao)) {
