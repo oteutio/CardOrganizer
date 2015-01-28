@@ -1,6 +1,7 @@
 package tmm.tcm.esmae14.cardorganizer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -66,11 +67,17 @@ public class MainActivity extends ActionBarActivity {
         mscan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(getApplicationContext(), "Aguarde um momento... ", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-                startActivityForResult(intent, 0);
-
+                try{
+                    Toast.makeText(getApplicationContext(), "Aguarde um momento... ", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+                    startActivityForResult(intent, 0);
+                } catch(Exception e){
+                    if(e.toString().contains("com.google.zxing.client.android.SCAN")){
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
+                        startActivity(intent);
+                    }
+                }
             }
         });
         btn_add.setOnClickListener(new View.OnClickListener() {
