@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +28,11 @@ import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private static final int ABRIR = 0, DELETE = 1;
+
     String format;
+    String type;
     int flag=0;
     ListView cardListView;
     List<Cartao> cartoes = new ArrayList<>();
@@ -102,15 +107,15 @@ public class MainActivity extends ActionBarActivity {
                 /*int count=db.getCardCount();
                 Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+".........."+count, Toast.LENGTH_SHORT).show();*/
                 if(flag==1){
-                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format);
-
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), format, type);
                 }else{
-                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "EAN_13");
+                    cartao = new Cartao(db.getCardCount(), String.valueOf(txtNomeCartao.getText()), String.valueOf(txtNumeroCartao.getText()), "EAN_13", type);
                 }
 
                 if (!cartaoExists(cartao)) {
                     db.createCartao(cartao);
                     cartoes.add(cartao);
+                    cartaoAdapter.notifyDataSetChanged();
                     noCard.setText("");
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
                     txtNomeCartao.setText("");
@@ -170,7 +175,41 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
 
+        menu.setHeaderIcon(R.drawable.ic_pencil);
+        menu.setHeaderTitle("Opções de Cartão");
+        menu.add(Menu.NONE, ABRIR, Menu.NONE, "Abrir Barcode do Cartão");
+        menu.add(Menu.NONE, DELETE, Menu.NONE, "Apagar Cartão");
+    }
+
+    public boolean onContextItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case ABRIR:
+                try{
+                    Toast.makeText(getApplicationContext(), "A gerar o Barcode... ", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent("com.google.zxing.client.android.ENCODE");
+                    intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
+                    intent.putExtra("ENCODE_FORMAT", cartoes.get(longClickedItemIndex).getFormato());
+                    intent.putExtra("ENCODE_DATA", cartoes.get(longClickedItemIndex).getNumero());
+                    startActivityForResult(intent,0);
+                } catch(Exception e){
+                    if(e.toString().contains("com.google.zxing.client.android.SCAN")){
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
+                        startActivity(intent);
+                    }
+                }
+                break;
+            case DELETE:
+                db.deleteCard(cartoes.get(longClickedItemIndex));
+                cartoes.remove(longClickedItemIndex);
+                cartaoAdapter.notifyDataSetChanged();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
 
     private boolean cartaoExists(Cartao cartao) {
         String name = cartao.getNomeCartao();
@@ -219,14 +258,11 @@ public class MainActivity extends ActionBarActivity {
                 format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                     // Adiciona o numero à caixa de texto
                     EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
-                    if(contents.matches("[0-9]+")){
-                        flag=1;
-                        txtNumeroCartao.setText(contents);
-                        txtNumeroCartao.setFocusable(false);
-                        txtNumeroCartao.setFocusableInTouchMode(false);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Código Inválido", Toast.LENGTH_SHORT).show();
-                    }
+                    flag=1;
+                    txtNumeroCartao.setText(contents);
+                    txtNumeroCartao.setFocusable(false);
+                    txtNumeroCartao.setFocusableInTouchMode(false);
+
             } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
             }

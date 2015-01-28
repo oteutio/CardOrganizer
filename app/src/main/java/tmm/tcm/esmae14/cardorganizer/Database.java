@@ -20,8 +20,8 @@ public class Database extends SQLiteOpenHelper {
     KEY_ID = "id",
     KEY_NOME = "nome",
     KEY_NUMERO = "numero",
-    KEY_TIPO = "tipo";//,
-    //KEY_CATEGORIAS = "categorias";
+    KEY_FORMATO = "formato",
+    KEY_TIPO = "tipo";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,7 +29,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_CARTOES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NOME + " TEXT," + KEY_NUMERO + " TEXT," + KEY_TIPO + " TEXT)" /*+ KEY_CATEGORIAS + " TEXT"*/);
+        db.execSQL("CREATE TABLE " + TABLE_CARTOES + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NOME + " TEXT," + KEY_NUMERO + " TEXT," + KEY_FORMATO + " TEXT," + KEY_TIPO + " TEXT)" /*+ KEY_CATEGORIAS + " TEXT"*/);
     }
 
     @Override
@@ -46,6 +46,7 @@ public class Database extends SQLiteOpenHelper {
 
         values.put(KEY_NOME, cartao.getNomeCartao());
         values.put(KEY_NUMERO, cartao.getNumero());
+        values.put(KEY_FORMATO, cartao.getFormato());
         values.put(KEY_TIPO, cartao.getTipo());
         //values.put(KEY_CATEGORIAS, cartao.getCategorias());
 
@@ -57,18 +58,18 @@ public class Database extends SQLiteOpenHelper {
     public Cartao getCartao(int id) {
         SQLiteDatabase db = getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_CARTOES, new String[] { KEY_ID, KEY_NOME, KEY_NUMERO, KEY_TIPO/*, KEY_CATEGORIAS*/ }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null );
+        Cursor cursor = db.query(TABLE_CARTOES, new String[] { KEY_ID, KEY_NOME, KEY_NUMERO, KEY_FORMATO, KEY_TIPO/*, KEY_CATEGORIAS*/ }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null );
 
         if (cursor != null)
             cursor.moveToFirst();
 
-        Cartao cartao = new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        Cartao cartao = new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         db.close();
         cursor.close();
         return cartao;
     }
 
-    public void deleteContact(Cartao cartao) {
+    public void deleteCard(Cartao cartao) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE_CARTOES, KEY_ID + "=?", new String[] { String.valueOf(cartao.getId()) });
         db.close();
@@ -91,6 +92,7 @@ public class Database extends SQLiteOpenHelper {
 
         values.put(KEY_NOME, cartao.getNomeCartao());
         values.put(KEY_NUMERO, cartao.getNumero());
+        values.put(KEY_FORMATO, cartao.getFormato());
         values.put(KEY_TIPO, cartao.getTipo());
         //values.put(KEY_CATEGORIAS, cartao.getCategorias());
 
@@ -108,7 +110,7 @@ public class Database extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                cards.add(new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+                cards.add(new Cartao(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4)));
             }
             while (cursor.moveToNext());
         }

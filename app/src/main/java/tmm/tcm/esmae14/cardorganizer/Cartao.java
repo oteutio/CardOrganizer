@@ -10,13 +10,15 @@ public class Cartao {
     private int id;
     private String nomeCartao;
     private String numero;
+    private String formato;
     private String tipo;
    // private ArrayList<String> categorias;
 
-    public Cartao(int id, String nomeCartao, String numero, String tipo/*, ArrayList<String> categorias*/){
+    public Cartao(int id, String nomeCartao, String numero, String formato, String tipo/*, ArrayList<String> categorias*/){
         setId(id);
         setNomeCartao(nomeCartao);
         setNumero(numero);
+        setFormato(formato);
         setTipo(tipo);
        // categorias=new ArrayList<String> ();
 
@@ -26,6 +28,7 @@ public class Cartao {
         id=0;
         nomeCartao="";
         numero="";
+        formato="";
         tipo="";
        // categorias=new ArrayList<String> ();
     }
@@ -46,8 +49,16 @@ public class Cartao {
         this.numero=numero;
     }
 
+    public void setFormato(String formato){
+
+        this.formato=formato;
+
+    }
+
     public void setTipo(String tipo){
+
         this.tipo=tipo;
+
     }
 
    /* public void addCategoria(String categoria){
@@ -60,7 +71,9 @@ public class Cartao {
 
     public int getId(){return id;}
 
-    public String getTipo(){return tipo;}
+    public String getFormato(){return formato;}
+
+    public String getTipo(){return formato;}
 
     public String getNumero(){return numero;}
 
@@ -76,7 +89,9 @@ public class Cartao {
 
         }*/
 
-        return String.format("Nome do Cartão:%s %nNúmero: %s %nTipo: %s %n",getNomeCartao(),getNumero(),getTipo()/*,s1*/);
+        return String.format("Nome do Cartão: %s %nNúmero: %s %nFormato: %s %nTipo: %s %n",getNomeCartao(),getNumero(),getFormato(),getTipo()/*,s1*/);
     }
+
+
 
 }
