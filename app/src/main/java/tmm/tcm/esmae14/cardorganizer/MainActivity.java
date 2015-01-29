@@ -82,9 +82,9 @@ public class MainActivity extends ActionBarActivity {
         tabSpec.setIndicator("Lista");
         tabHost.addTab(tabSpec);
 
-        tabSpec = tabHost.newTabSpec("Criar");
+        tabSpec = tabHost.newTabSpec("Adicionar");
         tabSpec.setContent(R.id.tabAdd);
-        tabSpec.setIndicator("Criar");
+        tabSpec.setIndicator("Adicionar");
         tabHost.addTab(tabSpec);
 //////////////////////////////////////////////////////////////////////////////////
 
