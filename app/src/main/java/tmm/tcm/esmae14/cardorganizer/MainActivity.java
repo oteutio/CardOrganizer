@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -32,12 +31,12 @@ public class MainActivity extends ActionBarActivity {
     private static final int ABRIR = 0, DELETE = 1;
 
     String format;
-
+    Intent startbuttonintent;
     int flag=0;
     ListView cardListView;
     List<Cartao> cartoes = new ArrayList<>();
     Database db;
-    EditText txtNomeCartao, txtNumeroCartao ;
+    EditText txtNomeCartao, txtNumeroCartao,txtNomeEdit, txtNumeroEdit ;
     TextView noCard;
     int longClickedItemIndex;
     ArrayAdapter<Cartao> cartaoAdapter;
@@ -71,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
                 return false;
             }
         });
-
+////////////////////////Tab Host////////////////////////////////////////////
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
 
         tabHost.setup();
@@ -85,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
         tabSpec.setContent(R.id.tabAdd);
         tabSpec.setIndicator("Criar");
         tabHost.addTab(tabSpec);
-
+//////////////////////////////////////////////////////////////////////////////////
 
         final Button btn_add=(Button) findViewById(R.id.btn_add);
         btn_add.setEnabled(false);
@@ -206,19 +205,42 @@ public class MainActivity extends ActionBarActivity {
 
         menu.setHeaderIcon(R.drawable.ic_pencil);
         menu.setHeaderTitle("Opções de Cartão");
-        menu.add(Menu.NONE, ABRIR, Menu.NONE, "Abrir Barcode do Cartão");
+        menu.add(Menu.NONE, ABRIR, Menu.NONE, "Editar Cartão");
         menu.add(Menu.NONE, DELETE, Menu.NONE, "Apagar Cartão");
+    }
+
+    public void editarCartao(String nome, String numero, String format, int id){
+
+        setContentView(R.layout.editar_cartao);
+
+
+
+
+
+
     }
 
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case ABRIR:
-                gerarBarcode(longClickedItemIndex);
+
+                Cartao cartao1=cartoes.get(longClickedItemIndex);
+                //Toast.makeText(getApplicationContext(),cartao1.toString(),Toast.LENGTH_LONG);
+                startbuttonintent = new Intent(MainActivity.this, EditarCartao.class);
+
+                startbuttonintent.putExtra("nome",cartao1.getNomeCartao());
+                startbuttonintent.putExtra("numero",cartao1.getNumero());
+                startbuttonintent.putExtra("id",cartao1.getId());
+                startbuttonintent.putExtra("format",cartao1.getFormato());
+                startActivity(startbuttonintent);
+
+                    //editarCartao(cartao1.getNomeCartao(),cartao1.getNumero(),cartao1.getFormato(), cartao1.getId());
                 break;
             case DELETE:
                 db.deleteCard(cartoes.get(longClickedItemIndex));
                 cartoes.remove(longClickedItemIndex);
                 cartaoAdapter.notifyDataSetChanged();
+                noCard.setText("Ainda não adicionou nenhum cartão!");
                 break;
         }
         return super.onContextItemSelected(item);

@@ -22,7 +22,7 @@ public class Database extends SQLiteOpenHelper {
     KEY_NUMERO = "numero",
     KEY_FORMATO = "formato",
     KEY_TIPO = "tipo";
-
+    //Key_Categorias = "categorias"
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
