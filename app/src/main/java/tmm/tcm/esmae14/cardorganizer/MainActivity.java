@@ -1,6 +1,10 @@
 package tmm.tcm.esmae14.cardorganizer;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
@@ -122,8 +126,9 @@ public class MainActivity extends ActionBarActivity {
                 }
 
                 if (!cartaoExists(cartao)) {
+
                     db.createCartao(cartao);
-                    cartoes.add(cartao);
+                   // cartoes.add(cartao);
                     cartaoAdapter.notifyDataSetChanged();
                     noCard.setText("");
                     Toast.makeText(getApplicationContext(), String.valueOf(txtNomeCartao.getText())+ " foi adicionado à sua lista de cartões!", Toast.LENGTH_SHORT).show();
@@ -132,7 +137,17 @@ public class MainActivity extends ActionBarActivity {
                     txtNumeroCartao.setFocusable(true);
                     txtNumeroCartao.setFocusableInTouchMode(true);
                     hideKeyboard();
+
+
+                       // noCard.setText("");
+                    cartoes.clear();
+                    cartoes.addAll(db.getAllCards());
+
+                    preencherLista();
+
+
                 }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeCartao.getText())+" já existe!",Toast.LENGTH_LONG).show();}
+
 
             }
         });
@@ -232,11 +247,16 @@ public class MainActivity extends ActionBarActivity {
                 break;
             case DELETE:
                 db.deleteCard(cartoes.get(longClickedItemIndex));
+                //Toast.makeText(getApplicationContext(), cartoes.get(longClickedItemIndex).toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), db.getCardCount(), Toast.LENGTH_SHORT).show();
+
                 cartoes.remove(longClickedItemIndex);
                 cartaoAdapter.notifyDataSetChanged();
                 if(db.getCardCount()==0) {
                     noCard.setText("Ainda não adicionou nenhum cartão!");
                 }
+
+                cartaoAdapter.notifyDataSetChanged();
                 break;
         }
         return super.onContextItemSelected(item);
@@ -315,6 +335,16 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Créditos");
+            builder.setMessage("Miguel Carneiro - 4140026\nNuno Castilho - 4140221\nPedro Correia - 4140032\nUnidade Curricular TMM");
+            builder.setPositiveButton("FECHAR", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // You don't have to do anything here if you just want it dismissed when clicked
+                }
+            });
+            builder.show();
             return true;
         }
 

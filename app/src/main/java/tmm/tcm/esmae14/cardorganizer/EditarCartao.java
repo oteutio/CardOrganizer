@@ -34,6 +34,7 @@ public class EditarCartao extends ActionBarActivity {
         String format=getIntent().getExtras().getString("format");
 
         cartao.setNomeCartao(getIntent().getExtras().getString("nome"));
+        final String nomeInicial = getIntent().getExtras().getString("nome");
         cartao.setId(id);
         cartao.setNumero(getIntent().getExtras().getString("numero"));
         cartao.setFormato(format);
@@ -87,11 +88,11 @@ public class EditarCartao extends ActionBarActivity {
                     cartao.setFormato("EAN_13");
                 }
 
-                if (!cartaoExists(cartao)) {
+                if (!cartaoExists(cartao) || nomeInicial.equalsIgnoreCase(txtNomeEdit.getText().toString())) {
                     db.updateCartao(cartao);
                     startActivity(new Intent(EditarCartao.this,MainActivity.class));
                     finish();
-                }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeEdit.getText())+" já existe!",Toast.LENGTH_LONG).show();}
+                }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeEdit.getText())+" já existe!"+ nomeInicial+ " "+ txtNomeEdit.getText().toString(),Toast.LENGTH_LONG).show();}
 
             }
         });
@@ -167,7 +168,7 @@ public class EditarCartao extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

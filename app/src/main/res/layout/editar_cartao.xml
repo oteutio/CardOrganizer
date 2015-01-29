@@ -52,8 +52,8 @@
             android:layout_column="0" />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="95dp"
+            android:layout_height="40dp"
             android:text="Leitor"
             android:id="@+id/btnLeitorEdit"
             android:layout_alignBottom="@+id/txtNumeroEdit"
@@ -63,7 +63,9 @@
             android:layout_marginLeft="-101dp"
             android:layout_row="0"
             android:layout_column="1"
-            style="@style/Base.TextAppearance.AppCompat.Button" />
+            style="?android:attr/buttonStyleSmall"
+            android:background="?attr/colorPrimary"
+            android:textColor="@color/white" />
     </GridLayout>
 
     <GridLayout
@@ -74,26 +76,32 @@
         android:layout_marginTop="24dp">
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="95dp"
+            android:layout_height="40dp"
             android:text="Voltar"
             android:id="@+id/btn_voltar"
             android:layout_below="@+id/txtNumeroEdit"
             android:layout_alignRight="@+id/Editar"
             android:layout_alignEnd="@+id/Editar"
             android:layout_row="0"
-            android:layout_column="0" />
+            android:layout_column="0"
+            style="?android:attr/buttonStyleSmall"
+            android:background="?attr/colorPrimary"
+            android:textColor="@color/white" /> />
 
         <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_width="95dp"
+            android:layout_height="40dp"
             android:text="Editar"
             android:id="@+id/btn_edit"
             android:layout_alignTop="@+id/btn_voltar"
             android:layout_toLeftOf="@+id/btnLeitorEdit"
             android:layout_toStartOf="@+id/btnLeitorEdit"
             android:layout_row="0"
-            android:layout_column="2" />
+            android:layout_column="2"
+            style="?android:attr/buttonStyleSmall"
+            android:background="?attr/colorPrimary"
+            android:textColor="@color/white" /> />
     </GridLayout>
 
 </RelativeLayout>

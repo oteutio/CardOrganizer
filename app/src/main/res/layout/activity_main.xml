@@ -76,8 +76,10 @@
 
                         <Button
                             style="?android:attr/buttonStyleSmall"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
+                            android:background="?attr/colorPrimary"
+                            android:textColor="@color/white"
+                            android:layout_width="95dp"
+                            android:layout_height="40dp"
                             android:text="Leitor"
                             android:id="@+id/btn_Leitor"
                             android:layout_gravity="center_horizontal"
@@ -89,8 +91,11 @@
                     </GridLayout>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="?android:attr/buttonStyleSmall"
+                        android:background="?attr/colorPrimary"
+                        android:textColor="@color/white"
+                        android:layout_width="95dp"
+                        android:layout_height="40dp"
                         android:text="Adicionar"
                         android:id="@+id/btn_add"
                         android:layout_gravity="center_horizontal"
@@ -112,7 +117,7 @@
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Os meus cartões"
+                        android:text="Os meus Cartões"
                         android:id="@+id/txtTitleList"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
