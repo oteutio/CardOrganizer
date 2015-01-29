@@ -19,7 +19,11 @@
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"></TabWidget>
+                style="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:background="@color/colorPrimary"
+                android:tabStripEnabled="false"
+                android:touchscreenBlocksFocus="false"
+                android:transitionGroup="false"></TabWidget>
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
@@ -80,6 +84,7 @@
                             android:layout_marginLeft="-101dp"
                             android:layout_marginTop="10dp"
                             android:layout_row="0"
+                            android:textColor="@color/colorAccent"
                             android:layout_column="8" />
 
                     </GridLayout>
@@ -94,6 +99,7 @@
                         android:layout_column="1"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="5dp"
+                        android:textColor="@color/colorAccent"
                         android:enabled="true" />
 
                 </LinearLayout>
