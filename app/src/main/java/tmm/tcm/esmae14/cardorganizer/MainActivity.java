@@ -209,16 +209,7 @@ public class MainActivity extends ActionBarActivity {
         menu.add(Menu.NONE, DELETE, Menu.NONE, "Apagar Cartão");
     }
 
-    public void editarCartao(String nome, String numero, String format, int id){
 
-        setContentView(R.layout.editar_cartao);
-
-
-
-
-
-
-    }
 
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
