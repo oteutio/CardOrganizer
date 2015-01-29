@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         /////////////////////////Nao me toca/////////////////////////
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -128,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
                     txtNomeCartao.setText("");
                     txtNumeroCartao.setText("");
                     txtNumeroCartao.setFocusable(true);
-                    txtNumeroCartao.setFocusableInTouchMode(true );
+                    txtNumeroCartao.setFocusableInTouchMode(true);
                     hideKeyboard();
                 }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeCartao.getText())+" já existe!",Toast.LENGTH_LONG).show();}
 
@@ -224,6 +226,7 @@ public class MainActivity extends ActionBarActivity {
                 startbuttonintent.putExtra("id",cartao1.getId());
                 startbuttonintent.putExtra("format",cartao1.getFormato());
                 startActivity(startbuttonintent);
+                finish();
 
                     //editarCartao(cartao1.getNomeCartao(),cartao1.getNumero(),cartao1.getFormato(), cartao1.getId());
                 break;
@@ -231,7 +234,9 @@ public class MainActivity extends ActionBarActivity {
                 db.deleteCard(cartoes.get(longClickedItemIndex));
                 cartoes.remove(longClickedItemIndex);
                 cartaoAdapter.notifyDataSetChanged();
-                noCard.setText("Ainda não adicionou nenhum cartão!");
+                if(db.getCardCount()==0) {
+                    noCard.setText("Ainda não adicionou nenhum cartão!");
+                }
                 break;
         }
         return super.onContextItemSelected(item);

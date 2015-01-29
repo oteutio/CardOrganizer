@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 
 public class EditarCartao extends ActionBarActivity {
     EditText txtNomeEdit, txtNumeroEdit ;
@@ -67,6 +69,8 @@ public class EditarCartao extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(EditarCartao.this,MainActivity.class));
+                finish();
+
             }
         });
         btnEditar.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +86,12 @@ public class EditarCartao extends ActionBarActivity {
                     cartao.setNumero(txtNumeroEdit.getText().toString());
                     cartao.setFormato("EAN_13");
                 }
-                  db.updateCartao(cartao);
-                startActivity(new Intent(EditarCartao.this,MainActivity.class));
+
+                if (!cartaoExists(cartao)) {
+                    db.updateCartao(cartao);
+                    startActivity(new Intent(EditarCartao.this,MainActivity.class));
+                    finish();
+                }else{Toast.makeText(getApplicationContext(),"O cartão "+ String.valueOf(txtNomeEdit.getText())+" já existe!",Toast.LENGTH_LONG).show();}
 
             }
         });
@@ -132,17 +140,30 @@ public class EditarCartao extends ActionBarActivity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 format1 = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // Adiciona o numero à caixa de texto
-                EditText txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
+                EditText txtNumeroEdit = (EditText) findViewById(R.id.txtNumeroEdit);
                 flag=1;
-                txtNumeroCartao.setText(contents);
-                txtNumeroCartao.setFocusable(false);
-                txtNumeroCartao.setFocusableInTouchMode(false);
+                txtNumeroEdit.setText(contents);
+                txtNumeroEdit.setFocusable(false);
+                txtNumeroEdit.setFocusableInTouchMode(false);
 
             } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
             }
         }
     }
+
+    private boolean cartaoExists(Cartao cartao) {
+        String name = cartao.getNomeCartao();
+        int cardCount = db.getCardCount();
+        List<Cartao> cartoes=db.getAllCards();
+
+        for (int i = 0; i < cardCount; i++) {
+            if (name.compareToIgnoreCase(cartoes.get(i).getNomeCartao()) == 0)
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
