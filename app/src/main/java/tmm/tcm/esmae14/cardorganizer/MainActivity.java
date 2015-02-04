@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -160,7 +161,18 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
-                    btn_add.setEnabled((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0);
+                if((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0){
+                    btn_add.setEnabled(true);
+                    btn_add.setBackgroundColor(Color.parseColor("#3f51b5"));
+
+                }else{
+
+                    btn_add.setEnabled(false);
+                    btn_add.setBackgroundColor(Color.LTGRAY);
+
+                }
+
+                //btn_add.setEnabled((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0);
 
             }
 
@@ -178,7 +190,18 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
-                btn_add.setEnabled((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0);
+                if((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0){
+                    btn_add.setEnabled(true);
+                    btn_add.setBackgroundColor(Color.parseColor("#3f51b5"));
+
+                }else{
+
+                    btn_add.setEnabled(false);
+                    btn_add.setBackgroundColor(Color.LTGRAY);
+
+                }
+
+                //btn_add.setEnabled((String.valueOf(txtNomeCartao.getText()).trim().length() * String.valueOf(txtNumeroCartao.getText()).trim().length()) > 0);
 
             }
 
