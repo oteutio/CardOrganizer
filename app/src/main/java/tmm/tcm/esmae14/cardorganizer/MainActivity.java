@@ -94,6 +94,7 @@ public class MainActivity extends ActionBarActivity {
 //////////////////////////////////////////////////////////////////////////////////
 
         final Button btn_add=(Button) findViewById(R.id.btn_add);
+        btn_add.setBackgroundColor(Color.LTGRAY);
         btn_add.setEnabled(false);
         final Button mscan=(Button) findViewById(R.id.btn_Leitor);
 
