@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
     TextView noCard;
     int longClickedItemIndex;
     ArrayAdapter<Cartao> cartaoAdapter;
-
+//12122
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
