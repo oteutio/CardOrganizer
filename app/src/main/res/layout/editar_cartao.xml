@@ -13,7 +13,9 @@
         android:id="@+id/Editar"
         android:layout_marginTop="49dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#3F51B5"
+        android:textStyle="bold" />
 
     <EditText
         android:layout_width="fill_parent"

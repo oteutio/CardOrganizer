@@ -12,16 +12,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -44,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
     Database db;
     EditText txtNomeCartao, txtNumeroCartao,txtNomeEdit, txtNumeroEdit ;
     TextView noCard;
+    int screenHeight;
     int longClickedItemIndex;
     ArrayAdapter<Cartao> cartaoAdapter;
 //12122
@@ -58,6 +62,9 @@ public class MainActivity extends ActionBarActivity {
         txtNomeCartao = (EditText) findViewById(R.id.txtNomeCartao);
         txtNumeroCartao = (EditText) findViewById(R.id.txtNumeroCartao);
         noCard=(TextView) findViewById(R.id.noCard);
+
+
+
         cardListView = (ListView) findViewById(R.id.listView);
         db= new Database(getApplicationContext());
 
@@ -91,6 +98,7 @@ public class MainActivity extends ActionBarActivity {
         tabSpec.setContent(R.id.tabAdd);
         tabSpec.setIndicator("Adicionar");
         tabHost.addTab(tabSpec);
+
 //////////////////////////////////////////////////////////////////////////////////
 
         final Button btn_add=(Button) findViewById(R.id.btn_add);
@@ -98,15 +106,34 @@ public class MainActivity extends ActionBarActivity {
         btn_add.setEnabled(false);
         final Button mscan=(Button) findViewById(R.id.btn_Leitor);
 
+///////////////////////Tamanho do ecrã////////////////////////////////////////////////
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
+        wm.getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
+        int sH=screenHeight/4;
+        int sW=screenWidth/12;
+
+
+
+
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        llp.setMargins(sW,sH, 0, 0); // llp.setMargins(left, top, right, bottom);
+        noCard.setLayoutParams(llp);
+//////////////////////////////////////////////////////////////////////////////////////
+
         mscan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
+                try {
+
                     Toast.makeText(getApplicationContext(), "Aguarde um momento... ", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent("com.google.zxing.client.android.SCAN");
                     startActivityForResult(intent, 0);
-                } catch(Exception e){
-                    if(e.toString().contains("com.google.zxing.client.android.SCAN")){
+                } catch (Exception e) {
+                    if (e.toString().contains("com.google.zxing.client.android.SCAN")) {
                         Toast.makeText(getApplicationContext(), "É necessária a Aplicação Barcode Scanner", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse("market://details?id=com.google.zxing.client.android"));
