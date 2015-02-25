@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CardOrganizer.iml" filepath="$PROJECT_DIR$/CardOrganizer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CardOrganizer2.iml" filepath="$PROJECT_DIR$/CardOrganizer2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CardOrganizer_new.iml" filepath="$PROJECT_DIR$/CardOrganizer_new.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

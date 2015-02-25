@@ -18,9 +18,9 @@
             android:text="Nome do Cartão"
             android:id="@+id/cardName"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,9 +28,9 @@
             android:text="Número do código de barras"
             android:id="@+id/barNumber"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="20dp"
-            style="@style/Base.TextAppearance.AppCompat.Caption" />
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 
