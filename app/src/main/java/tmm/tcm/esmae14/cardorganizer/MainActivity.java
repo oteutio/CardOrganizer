@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -107,10 +108,11 @@ public class MainActivity extends ActionBarActivity {
         final Button mscan=(Button) findViewById(R.id.btn_Leitor);
 
 ///////////////////////Tamanho do ecrã////////////////////////////////////////////////
-
+//////////////////////Apenas faz ao criar, falta validação horizontal/////////////////
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
         wm.getDefaultDisplay().getMetrics(displayMetrics);
+
         int screenWidth = displayMetrics.widthPixels;
         screenHeight = displayMetrics.heightPixels;
         int sH=screenHeight/4;
